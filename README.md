@@ -22,6 +22,7 @@ The pipeline simulates a production-grade healthcare data workflow — fully aut
 ## 1.Clone Repository
 
 git clone https://github.com/<your-username>/healthcare-etl-pipeline.git
+
 cd healthcare-etl-pipeline
 
 
@@ -43,5 +44,7 @@ http://localhost:8080
 ## 5.Trigger DAG
 
 DAG ID: healthcare_multi_task_pipeline_simplified
+
 Schedule: @daily
+
 AWS Connection ID: aws_default
