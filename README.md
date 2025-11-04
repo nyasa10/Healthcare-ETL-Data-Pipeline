@@ -16,3 +16,32 @@ The pipeline simulates a production-grade healthcare data workflow — fully aut
 | Cloud Storage            | **Amazon S3**                  |
 | Logging                  | **Python Logging Module**      |
 | Scheduling               | **Airflow DAG (TaskFlow API)** |
+
+## Setup Instructions (Local or Docker)
+
+## 1.Clone Repository
+
+git clone https://github.com/<your-username>/healthcare-etl-pipeline.git
+cd healthcare-etl-pipeline
+
+
+## 2.Start Airflow (Docker Compose)
+
+docker-compose up -d
+
+
+## 3.Place Raw Data
+
+/opt/airflow/data/healthcare_dataset.csv
+
+
+## 4.Access Airflow UI
+
+http://localhost:8080
+
+
+## 5.Trigger DAG
+
+DAG ID: healthcare_multi_task_pipeline_simplified
+Schedule: @daily
+AWS Connection ID: aws_default
