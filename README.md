@@ -1,6 +1,6 @@
 # Healthcare-ETL-Data-Pipeline
 
-##Tech Stack
+## Tech Stack
 
 | Component                | Tool                           |
 | ------------------------ | ------------------------------ |
