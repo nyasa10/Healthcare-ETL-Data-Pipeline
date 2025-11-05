@@ -21,9 +21,9 @@ The pipeline simulates a production-grade healthcare data workflow — fully aut
 
 ## 1.Clone Repository
 
-git clone https://github.com/<your-username>/healthcare-etl-pipeline.git
+git clone https://github.com/nyasa10/Healthcare-ETL-Data-Pipeline.git
 
-cd healthcare-etl-pipeline
+cd healthcare_project
 
 
 ## 2.Start Airflow (Docker Compose)
