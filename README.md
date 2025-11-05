@@ -48,3 +48,8 @@ DAG ID: healthcare_multi_task_pipeline_simplified
 Schedule: @daily
 
 AWS Connection ID: aws_default
+
+## Architecture Diagram
+
+![Healthcare ETL Pipeline Architecture](./healthcare_system_design.png)
+
