@@ -14,7 +14,6 @@ The pipeline simulates a production-grade healthcare data workflow — fully aut
 | Containerization         | **Docker**                     |
 | Programming Language     | **Python 3.9+**                |
 | Cloud Storage            | **Amazon S3**                  |
-| Logging                  | **Python Logging Module**      |
 | Scheduling               | **Airflow DAG (TaskFlow API)** |
 
 ## Setup Instructions (Local or Docker)
