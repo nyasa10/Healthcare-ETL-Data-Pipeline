@@ -1,19 +1,11 @@
 from datetime import datetime
 import logging
 
-# Set up logging
-logging.basicConfig(
-    filename='/opt/airflow/logs/healthcare_etl.log',
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+
 
 # --- 1. EXTRACT ---
 def extract_data():
-    """
-    Extracts data from a CSV file.
-    Returns a pandas DataFrame to be passed via XCom.
-    """
+    
     import pandas as pd
     raw_file_path = '/opt/airflow/data/healthcare_dataset.csv'
     try:
@@ -27,14 +19,11 @@ def extract_data():
 
 # --- 2. VALIDATE ---
 def validate_data(df):
-    """
-    Performs data quality checks to ensure data reliability.
-    """
+    
     if df is None:
         logging.warning("No data received for validation.")
         return None
 
-    # Basic sanity checks
     if not df['Age'].between(0, 120).all():
         raise ValueError("Invalid ages detected.")
     if df['Gender'].isnull().any():
@@ -46,11 +35,9 @@ def validate_data(df):
     return df
 
 
-# --- 3. TRANSFORM ---
+
 def transform_data(df):
-    """
-    Transforms and enriches healthcare data for analytics.
-    """
+    
     if df is None:
         logging.warning("No data received from extract task. Skipping transformation.")
         return None
@@ -63,13 +50,13 @@ def transform_data(df):
     df['Gender'] = df['Gender'].str.capitalize()
     df['Medical Condition'] = df['Medical Condition'].str.capitalize()
 
-    # Feature Engineering
+   
     df['Length of Stay (days)'] = (df['Discharge Date'] - df['Date of Admission']).dt.days
     bins = [0, 18, 35, 60, 120]
     labels = ['0-18', '19-35', '36-60', '60+']
     df['Age Group'] = pd.cut(df['Age'], bins=bins, labels=labels, right=False)
 
-    # Business KPI calculations
+    
     df['Readmitted'] = df['Readmission Status'].map({'Yes': 1, 'No': 0})
     avg_stay = df['Length of Stay (days)'].mean()
     readmission_rate = df['Readmitted'].mean() * 100
@@ -86,9 +73,7 @@ def transform_data(df):
 
 # --- 4. LOAD ---
 def load_to_s3(result):
-    """
-    Loads transformed data and KPI metrics to Amazon S3.
-    """
+    
     if result is None:
         logging.warning("No data received from transform task. Skipping load.")
         return
@@ -100,7 +85,7 @@ def load_to_s3(result):
 
     s3_hook = S3Hook(aws_conn_id='aws_default')
 
-    # Store cleaned data
+   
     data_key = f'healthcare_data/processed/cleaned_data_{datetime.now().strftime("%Y-%m-%d")}.csv'
     csv_string = df.to_csv(index=False)
     s3_hook.load_string(
@@ -110,7 +95,7 @@ def load_to_s3(result):
         replace=True
     )
 
-    # Store metrics summary
+  
     metrics_key = f'healthcare_data/metrics/kpi_summary_{datetime.now().strftime("%Y-%m-%d")}.json'
     import json
     s3_hook.load_string(
@@ -121,5 +106,4 @@ def load_to_s3(result):
     )
 
 
-    logging.info(f"Successfully loaded data to s3://healthcare-etl-nyasa/{data_key}")
-    logging.info(f"Successfully uploaded metrics to s3://healthcare-etl-nyasa/{metrics_key}")
+    
